@@ -1,0 +1,18 @@
+{
+  "name": "t3kk-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ryan Flaherty",
+  "license": "MIT",
+  "dependencies": {
+    "discord.io": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.3.1",
+    "eslint-config-google": "^0.6.0"
+  }
+}
