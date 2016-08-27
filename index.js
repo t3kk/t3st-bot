@@ -1,5 +1,8 @@
 let Discord = require('discord.io');
 let config = require('./config.js');
+let lame = require('lame');
+let youtubeDL = require('youtube-dl');
+let ffmpeg = require('fluent-ffmpeg');
 
 let bot = new Discord.Client({
   token: config.token,
@@ -8,6 +11,7 @@ let bot = new Discord.Client({
 
 bot.on('ready', function() {
   console.log(bot.username + " - (" + bot.id + ")");
+  bot.joinVoiceChannel("149328947560054784");
 });
 
 bot.on('message', function(user, userID, channelID, message, event) {
@@ -36,7 +40,30 @@ bot.on('message', function(user, userID, channelID, message, event) {
       message: response
     });
   }
+  if (message.startsWith('@play ')) {
+    // TODO: vlaidate URL with https://gist.github.com/dperini/729294 ?
+    // get the url
+    let url = message.substr(6);
+    console.log(`url: ${url}`);
+    let videoStream = youtubeDL('https://www.youtube.com/watch?v=quwBEzrwXSU',
+      ['--format=m4a']);
+    videoStream.on('info', function(info) {
+      console.log(info);
+      var command = ffmpeg(videoStream).noVideo().withAudioCodec('f64le');
+      let handleStream = function handleStream(error, stream) {
+        console.log('url? ' + url);
+        stream.send(command);
+      };
+      bot.getAudioContext(
+        {channel: "149328947560054784", stereo: true}, handleStream);
+    });
+  }
 });
+
+function playMP3(stream) {
+
+  stream.send(send);
+}
 
 //  Handle ctrl + c and shutdown cleanly
 process.on('SIGINT', function() {
