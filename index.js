@@ -11,7 +11,7 @@ let bot = new Discord.Client({
 
 bot.on('ready', function() {
   console.log(bot.username + " - (" + bot.id + ")");
-  bot.joinVoiceChannel("149328947560054784");
+  bot.joinVoiceChannel("219530331357839370");
 });
 
 bot.on('message', function(user, userID, channelID, message, event) {
@@ -45,25 +45,32 @@ bot.on('message', function(user, userID, channelID, message, event) {
     // get the url
     let url = message.substr(6);
     console.log(`url: ${url}`);
-    let videoStream = youtubeDL('https://www.youtube.com/watch?v=quwBEzrwXSU',
+    let m4aStream = youtubeDL(url,
       ['--format=m4a']);
-    videoStream.on('info', function(info) {
-      console.log(info);
-      var command = ffmpeg(videoStream).noVideo().withAudioCodec('f64le');
+    m4aStream.on('info', function(info) {
+      console.log('Downloading video in m4a format.');
+      var mp3Stream = ffmpeg(m4aStream)
+        .noVideo()
+        .withAudioCodec('libmp3lame')
+        .format('mp3')
+        .stream()
+        .on('start', function(commandLine) {
+          console.log('Converting m4a to mp3.  Spawned Ffmpeg with command: ' + commandLine);
+        }); // Mp3 stream
+      let mp3Decoder = new lame.Decoder();
       let handleStream = function handleStream(error, stream) {
-        console.log('url? ' + url);
-        stream.send(command);
+        stream.send(mp3Decoder);
       };
-      bot.getAudioContext(
-        {channel: "149328947560054784", stereo: true}, handleStream);
+      mp3Stream.pipe(mp3Decoder);
+      mp3Decoder.on('format', function(format) {
+        console.log('MP3 decoding started.  Format');
+        console.log(format);
+        bot.getAudioContext(
+          {channel: "219530331357839370", stereo: true}, handleStream);
+      });
     });
   }
 });
-
-function playMP3(stream) {
-
-  stream.send(send);
-}
 
 //  Handle ctrl + c and shutdown cleanly
 process.on('SIGINT', function() {

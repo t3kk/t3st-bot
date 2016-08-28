@@ -9,7 +9,8 @@
   "author": "Ryan Flaherty",
   "license": "MIT",
   "dependencies": {
-    "discord.io": "^2.0.0"
+    "discord.io": "^2.0.0",
+    "lame": "^1.2.4"
   },
   "devDependencies": {
     "eslint": "^3.3.1",
