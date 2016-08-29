@@ -3,6 +3,7 @@ let config = require('./config.js');
 let lame = require('lame');
 let youtubeDL = require('youtube-dl');
 let ffmpeg = require('fluent-ffmpeg');
+let fs = require('fs');
 
 let bot = new Discord.Client({
   token: config.token,
@@ -11,7 +12,7 @@ let bot = new Discord.Client({
 
 bot.on('ready', function() {
   console.log(bot.username + " - (" + bot.id + ")");
-  bot.joinVoiceChannel("219530331357839370");
+  bot.joinVoiceChannel("140673738298359809");
 });
 
 bot.on('message', function(user, userID, channelID, message, event) {
@@ -45,29 +46,34 @@ bot.on('message', function(user, userID, channelID, message, event) {
     // get the url
     let url = message.substr(6);
     console.log(`url: ${url}`);
-    let m4aStream = youtubeDL(url,
-      ['--format=m4a']);
-    m4aStream.on('info', function(info) {
-      console.log('Downloading video in m4a format.');
-      var mp3Stream = ffmpeg(m4aStream)
-        .noVideo()
-        .withAudioCodec('libmp3lame')
-        .format('mp3')
-        .stream()
-        .on('start', function(commandLine) {
-          console.log('Converting m4a to mp3.  Spawned Ffmpeg with command: ' + commandLine);
-        }); // Mp3 stream
-      let mp3Decoder = new lame.Decoder();
-      let handleStream = function handleStream(error, stream) {
-        stream.send(mp3Decoder);
-      };
-      mp3Stream.pipe(mp3Decoder);
-      mp3Decoder.on('format', function(format) {
-        console.log('MP3 decoding started.  Format');
-        console.log(format);
-        bot.getAudioContext(
-          {channel: "219530331357839370", stereo: true}, handleStream);
-      });
+    let ytDL = youtubeDL(url,
+      ['-x', '--extract-audio', '--audio-format=mp3']);
+    ytDL.on('info', function(info) {
+      console.log('Downloading video in mp3 format.');
+      // var mp3Stream = ffmpeg(m4aStream)
+      //   .noVideo()
+      //   .withAudioCodec('libmp3lame')
+      //   .format('mp3')
+      //   .stream()
+      //   .on('start', function(commandLine) {
+      //     console.log('Converting m4a to mp3.  Spawned Ffmpeg with command: ' + commandLine);
+      //   }); // Mp3 stream
+      // let mp3Decoder = new lame.Decoder();
+      // mp3Stream.pipe(mp3Decoder);
+      // mp3Decoder.on('format', function(format) {
+      //   console.log('MP3 decoding started.  Format');
+      //   console.log(format);
+      //   bot.getAudioContext(
+      //     {channel: "219530331357839370", stereo: true}, handleStream);
+      // });
+      ytDL.pipe(fs.createWriteStream('test.mp3'));
+    });
+    ytDL.on('end', () => {
+      console.log('There will be no more data.');
+      bot.getAudioContext(
+          {channel: "140673738298359809", stereo: true}, (error, stream) => {
+            stream.playAudioFile('test.mp3');
+          });
     });
   }
 });
