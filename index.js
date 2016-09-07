@@ -54,17 +54,21 @@ bot.on('message', function(user, userID, channelID, message, event) {
     // get the url
     let url = message.substr(6);
     console.log(`url: ${url}`);
-    youtubeDL.exec(url, ['-x', '--audio-format', 'mp3'], {}, function exec(err, output) {
-      'use strict';
-      if (err) {
-        throw err;
-      } else {
-        // Play file
-        queueFile(output);
-      }
-
+    youtubeDL.exec(url,
+      ['-x', '--audio-format', 'mp3', '--audio-quality', '128K'],
+      {},
+      function exec(err, output) {
+        'use strict';
+        if (err) {
+          throw err;
+        } else {
+          // Play file
+          console.log(output.join('\n'));
+          queueFile(output);
+        }
       // output.pipe(fs.createWriteStream('test.mp3'));
-    });
+      }
+    );
   }
   if (volumeRegex.exec(message)) {
     let newVolume = volumeRegex.exec(message)[1] / 100;
@@ -82,6 +86,7 @@ process.on('SIGINT', function() {
 
 // TODO Rename to somethign involving getting the file name and move out
 function queueFile(output){
+  let ChildProc = require('child_process');
   // Kinda trustingly get file name... Make this seletcion safer if possible
   let fileNameRegex = /^\[ffmpeg\] Destination: (.*)/;
   let fileNameExtraction = fileNameRegex.exec(output[output.length - 2]);
@@ -91,17 +96,17 @@ function queueFile(output){
     console.log(`Queue File ${fileName}`);
     bot.getAudioContext(
         {channel: "140673738298359809", stereo: true}, (error, stream) => {
-          let mp3Decoder = new lame.Decoder();
-          var mp3Stream = fs.createReadStream(fileName);
-          mp3Stream.pipe(mp3Decoder);
-          mp3Decoder.on('format', function(format) {
-            console.log('MP3 decoding started.  Format');
-            console.log(format);
-          });
+          let pcmStream = ChildProc.spawn('ffmpeg', [
+            '-i', fileName,
+            '-f', 's16le',
+            '-ar', '48000',
+            // '-ac', ACBI._audioChannels,
+            'pipe:1'
+          ], {stdio: ['pipe', 'pipe', 'ignore']});
           // let speaker = new Speaker();
           // volumeStream.pipe(speaker);
-          mp3Decoder.pipe(volumeStream);
-          console.log(mp3Decoder);
+          pcmStream.stdout.pipe(volumeStream);
+          console.log(pcmStream);
           stream.send(volumeStream);
           // stream.send(pcmVolStream);
         });
