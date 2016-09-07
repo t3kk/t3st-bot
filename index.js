@@ -10,6 +10,7 @@ let Speaker = require('speaker');
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
 let volumeStream = new Volume();
+volumeStream.setVolume(.05);
 let volumeRegex = /^@(?:vol|volume) ([0-9]{1,2})/;
 
 let bot = new Discord.Client({
@@ -79,7 +80,7 @@ process.on('SIGINT', function() {
   process.exit();
 });
 
-//Rename to somethign involving getting the file name
+// TODO Rename to somethign involving getting the file name and move out
 function queueFile(output){
   // Kinda trustingly get file name... Make this seletcion safer if possible
   let fileNameRegex = /^\[ffmpeg\] Destination: (.*)/;
@@ -90,14 +91,7 @@ function queueFile(output){
     console.log(`Queue File ${fileName}`);
     bot.getAudioContext(
         {channel: "140673738298359809", stereo: true}, (error, stream) => {
-          let mp3Decoder = new lame.Decoder({
-            channels: 2,
-            bitDepth: 16,
-            sampleRate: 44100,
-            bitRate: 128,
-            outSampleRate: 22050,
-            mode: lame.STEREO
-          });
+          let mp3Decoder = new lame.Decoder();
           var mp3Stream = fs.createReadStream(fileName);
           mp3Stream.pipe(mp3Decoder);
           mp3Decoder.on('format', function(format) {
@@ -107,7 +101,7 @@ function queueFile(output){
           // let speaker = new Speaker();
           // volumeStream.pipe(speaker);
           mp3Decoder.pipe(volumeStream);
-          console.log(stream);
+          console.log(mp3Decoder);
           stream.send(volumeStream);
           // stream.send(pcmVolStream);
         });
