@@ -96,11 +96,11 @@ function queueFile(output){
     console.log(`Queue File ${fileName}`);
     bot.getAudioContext(
         {channel: "140673738298359809", stereo: true}, (error, stream) => {
+          //TODO:hook queue into callbacks https://github.com/izy521/discord.io/blob/daeba2c4aa292657cc7b490e73c563991bd3980b/lib/index.js#L1957
           let pcmStream = ChildProc.spawn('ffmpeg', [
             '-i', fileName,
             '-f', 's16le',
             '-ar', '48000',
-            // '-ac', ACBI._audioChannels,
             'pipe:1'
           ], {stdio: ['pipe', 'pipe', 'ignore']});
           // let speaker = new Speaker();
