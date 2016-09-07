@@ -4,6 +4,13 @@ let lame = require('lame');
 let youtubeDL = require('youtube-dl');
 let ffmpeg = require('fluent-ffmpeg');
 let fs = require('fs');
+let Volume = require('pcm-volume');
+let Speaker = require('speaker');
+
+// Define some stuff!!!
+// TODO move this out to some singletons for easier access?
+let volumeStream = new Volume();
+let volumeRegex = /^(?:vol|volume) ([0-9]{1,2})/;
 
 let bot = new Discord.Client({
   token: config.token,
@@ -46,35 +53,22 @@ bot.on('message', function(user, userID, channelID, message, event) {
     // get the url
     let url = message.substr(6);
     console.log(`url: ${url}`);
-    let ytDL = youtubeDL(url,
-      ['-x', '--extract-audio', '--audio-format=mp3']);
-    ytDL.on('info', function(info) {
-      console.log('Downloading video in mp3 format.');
-      // var mp3Stream = ffmpeg(m4aStream)
-      //   .noVideo()
-      //   .withAudioCodec('libmp3lame')
-      //   .format('mp3')
-      //   .stream()
-      //   .on('start', function(commandLine) {
-      //     console.log('Converting m4a to mp3.  Spawned Ffmpeg with command: ' + commandLine);
-      //   }); // Mp3 stream
-      // let mp3Decoder = new lame.Decoder();
-      // mp3Stream.pipe(mp3Decoder);
-      // mp3Decoder.on('format', function(format) {
-      //   console.log('MP3 decoding started.  Format');
-      //   console.log(format);
-      //   bot.getAudioContext(
-      //     {channel: "219530331357839370", stereo: true}, handleStream);
-      // });
-      ytDL.pipe(fs.createWriteStream('test.mp3'));
+    youtubeDL.exec(url, ['-x', '--audio-format', 'mp3'], {}, function exec(err, output) {
+      'use strict';
+      if (err) {
+        throw err;
+      } else {
+        // Play file
+        queueFile(output);
+      }
+
+      // output.pipe(fs.createWriteStream('test.mp3'));
     });
-    ytDL.on('end', () => {
-      console.log('There will be no more data.');
-      bot.getAudioContext(
-          {channel: "140673738298359809", stereo: true}, (error, stream) => {
-            stream.playAudioFile('test.mp3');
-          });
-    });
+  }
+  if (volumeRegex.exec(message)) {
+    let newVolume = volumeRegex.exec(message)[1] / 100;
+    console.log(`setting volume to ${newVolume}`);
+    volumeStream.setVolume(newVolume);
   }
 });
 
@@ -84,3 +78,41 @@ process.on('SIGINT', function() {
   bot.disconnect();
   process.exit();
 });
+
+//Rename to somethign involving getting the file name
+function queueFile(output){
+  // Kinda trustingly get file name... Make this seletcion safer if possible
+  let fileNameRegex = /^\[ffmpeg\] Destination: (.*)/;
+  let fileNameExtraction = fileNameRegex.exec(output[output.length - 2]);
+  console.log(fileNameExtraction);
+  if (fileNameExtraction) {
+    let fileName = fileNameExtraction[1];
+    console.log(`Queue File ${fileName}`);
+    bot.getAudioContext(
+        {channel: "140673738298359809", stereo: true}, (error, stream) => {
+          let mp3Decoder = new lame.Decoder({
+            channels: 2,
+            bitDepth: 16,
+            sampleRate: 44100,
+            bitRate: 128,
+            outSampleRate: 22050,
+            mode: lame.STEREO
+          });
+          var mp3Stream = fs.createReadStream(fileName);
+          mp3Stream.pipe(mp3Decoder);
+          mp3Decoder.on('format', function(format) {
+            console.log('MP3 decoding started.  Format');
+            console.log(format);
+          });
+          // let speaker = new Speaker();
+          // volumeStream.pipe(speaker);
+          mp3Decoder.pipe(volumeStream);
+          console.log(stream);
+          stream.send(volumeStream);
+          // stream.send(pcmVolStream);
+        });
+  } else { // Unable to extract file name
+    console.log('File Not Found!  YTDL Output:');
+    console.log(output);
+  }
+}
