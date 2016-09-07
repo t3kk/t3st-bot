@@ -10,7 +10,7 @@ let Speaker = require('speaker');
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
 let volumeStream = new Volume();
-let volumeRegex = /^(?:vol|volume) ([0-9]{1,2})/;
+let volumeRegex = /^@(?:vol|volume) ([0-9]{1,2})/;
 
 let bot = new Discord.Client({
   token: config.token,
