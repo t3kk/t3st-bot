@@ -5,7 +5,6 @@ let youtubeDL = require('youtube-dl');
 let ffmpeg = require('fluent-ffmpeg');
 let fs = require('fs');
 let Volume = require('pcm-volume');
-let Speaker = require('speaker');
 
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
