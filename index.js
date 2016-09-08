@@ -2,7 +2,7 @@ let Discord = require('discord.io');
 let config = require('./config.js');
 let youtubeDL = require('youtube-dl');
 
-let {addToQueue, setStream} = require('./src/musicControls');
+let {addToQueue, setStream, setVolume} = require('./src/musicControls');
 
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
@@ -68,7 +68,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
   if (volumeRegex.exec(message)) {
     let newVolume = volumeRegex.exec(message)[1] / 100;
     console.log(`setting volume to ${newVolume}`);
-    // volumeStream.setVolume(newVolume);
+    setVolume(newVolume);
   }
 });
 

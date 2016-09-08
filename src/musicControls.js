@@ -66,4 +66,4 @@ function setStream(discordVoiceStream, textChannel) {
   chatChannel = textChannel;
 }
 
-module.exports = {addToQueue, setStream};
+module.exports = {addToQueue, setStream, setVolume};
