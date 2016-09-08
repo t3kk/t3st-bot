@@ -1,16 +1,11 @@
 let Discord = require('discord.io');
 let config = require('./config.js');
-let lame = require('lame');
 let youtubeDL = require('youtube-dl');
-let ffmpeg = require('fluent-ffmpeg');
-let fs = require('fs');
-let Volume = require('pcm-volume');
-let Speaker = require('speaker');
+
+let {addToQueue, setStream} = require('./src/musicControls');
 
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
-let volumeStream = new Volume();
-volumeStream.setVolume(.05);
 let volumeRegex = /^@(?:vol|volume) ([0-9]{1,2})/;
 
 let bot = new Discord.Client({
@@ -73,7 +68,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
   if (volumeRegex.exec(message)) {
     let newVolume = volumeRegex.exec(message)[1] / 100;
     console.log(`setting volume to ${newVolume}`);
-    volumeStream.setVolume(newVolume);
+    // volumeStream.setVolume(newVolume);
   }
 });
 
@@ -86,7 +81,6 @@ process.on('SIGINT', function() {
 
 // TODO Rename to somethign involving getting the file name and move out
 function queueFile(output){
-  let ChildProc = require('child_process');
   // Kinda trustingly get file name... Make this seletcion safer if possible
   let fileNameRegex = /^\[ffmpeg\] Destination: (.*)/;
   let fileNameExtraction = fileNameRegex.exec(output[output.length - 2]);
@@ -94,24 +88,24 @@ function queueFile(output){
   if (fileNameExtraction) {
     let fileName = fileNameExtraction[1];
     console.log(`Queue File ${fileName}`);
-    bot.getAudioContext(
-        {channel: "140673738298359809", stereo: true}, (error, stream) => {
-          //TODO:hook queue into callbacks https://github.com/izy521/discord.io/blob/daeba2c4aa292657cc7b490e73c563991bd3980b/lib/index.js#L1957
-          let pcmStream = ChildProc.spawn('ffmpeg', [
-            '-i', fileName,
-            '-f', 's16le',
-            '-ar', '48000',
-            'pipe:1'
-          ], {stdio: ['pipe', 'pipe', 'ignore']});
-          // let speaker = new Speaker();
-          // volumeStream.pipe(speaker);
-          pcmStream.stdout.pipe(volumeStream);
-          console.log(pcmStream);
-          stream.send(volumeStream);
-          // stream.send(pcmVolStream);
-        });
+    setupStream();
+    addToQueue(fileName);
   } else { // Unable to extract file name
     console.log('File Not Found!  YTDL Output:');
     console.log(output);
+  }
+}
+
+let streamSetup;
+
+function setupStream(){
+  if (!streamSetup) {
+    streamSetup = true;
+    bot.getAudioContext(
+      {channel: "140673738298359809", stereo: true}, (error, stream) => {
+        console.log(`err: ${error}`);
+        //TODO:hook queue into callbacks https://github.com/izy521/discord.io/blob/daeba2c4aa292657cc7b490e73c563991bd3980b/lib/index.js#L1957
+        setStream(stream);
+      });
   }
 }
