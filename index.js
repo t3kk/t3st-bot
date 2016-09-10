@@ -2,7 +2,9 @@ let Discord = require('discord.io');
 let config = require('./config.js');
 let youtubeDL = require('youtube-dl');
 
-let {addToQueue, setStream, setVolume} = require('./src/musicControls');
+let {addToQueue, setStreamChannel, setVolume} = require('./src/musicControls');
+
+let voiceChannel = "140673738298359809"
 
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
@@ -15,7 +17,7 @@ let bot = new Discord.Client({
 
 bot.on('ready', function() {
   console.log(bot.username + " - (" + bot.id + ")");
-  bot.joinVoiceChannel("140673738298359809");
+  bot.joinVoiceChannel(voiceChannel);
 });
 
 bot.on('message', function(user, userID, channelID, message, event) {
@@ -66,8 +68,8 @@ bot.on('message', function(user, userID, channelID, message, event) {
     );
   }
   if (volumeRegex.exec(message)) {
-    let newVolume = volumeRegex.exec(message)[1] / 100;
-    console.log(`setting volume to ${newVolume}`);
+    let newVolume = volumeRegex.exec(message)[1];
+    console.log(`1:) setting volume to ${newVolume}`);
     setVolume(newVolume);
   }
 });
@@ -101,11 +103,9 @@ let streamSetup;
 function setupStream(){
   if (!streamSetup) {
     streamSetup = true;
-    bot.getAudioContext(
-      {channel: "140673738298359809", stereo: true}, (error, stream) => {
-        console.log(`err: ${error}`);
-        //TODO:hook queue into callbacks https://github.com/izy521/discord.io/blob/daeba2c4aa292657cc7b490e73c563991bd3980b/lib/index.js#L1957
-        setStream(stream);
-      });
+    textChannel = ''; // TODO
+    console.log('bot:');
+    console.log(bot);
+    setStreamChannel(bot, voiceChannel, textChannel);
   }
 }
