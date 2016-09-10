@@ -2,13 +2,14 @@ let Discord = require('discord.io');
 let config = require('./config.js');
 let youtubeDL = require('youtube-dl');
 
-let {addToQueue, setStreamChannel, setVolume} = require('./src/musicControls');
+let {addToQueue, setStreamChannel, setVolume, toggleShuffle} = require('./src/musicControls');
 
-let voiceChannel = "140673738298359809"
+let voiceChannel = "140673738298359809";
+let textChannel = "140673738298359808";
 
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
-let volumeRegex = /^@(?:vol|volume) ([0-9]{1,2})/;
+let volumeRegex = /^@(?:vol|volume) (100|[0-9]{1,2})/;
 
 let bot = new Discord.Client({
   token: config.token,
@@ -23,7 +24,7 @@ bot.on('ready', function() {
 bot.on('message', function(user, userID, channelID, message, event) {
   //  If the message starts with roll, take the first instance of the dice regex and give the result
   //  TODO: error checking
-  if (message.startsWith('!roll ')) {
+  if (message.startsWith('@roll ')) {
     //  TODO: use matching group so we can switch on the command part
     let diceRegex = /!roll (\d*)(d)(\d+)( for .*)?/;
     let requestedRole = diceRegex.exec(message);
@@ -72,6 +73,10 @@ bot.on('message', function(user, userID, channelID, message, event) {
     console.log(`1:) setting volume to ${newVolume}`);
     setVolume(newVolume);
   }
+
+  if (message.startsWith('@shuffle')) {
+    toggleShuffle();
+  }
 });
 
 //  Handle ctrl + c and shutdown cleanly
@@ -82,7 +87,7 @@ process.on('SIGINT', function() {
 });
 
 // TODO Rename to somethign involving getting the file name and move out
-function queueFile(output){
+function queueFile(output) {
   // Kinda trustingly get file name... Make this seletcion safer if possible
   let fileNameRegex = /^\[ffmpeg\] Destination: (.*)/;
   let fileNameExtraction = fileNameRegex.exec(output[output.length - 2]);
@@ -100,10 +105,9 @@ function queueFile(output){
 
 let streamSetup;
 
-function setupStream(){
+function setupStream() {
   if (!streamSetup) {
     streamSetup = true;
-    textChannel = ''; // TODO
     console.log('bot:');
     console.log(bot);
     setStreamChannel(bot, voiceChannel, textChannel);

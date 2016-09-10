@@ -1,5 +1,6 @@
 let ChildProc = require('child_process');
 let Volume = require('pcm-volume');
+// TODO: prefix private variables
 
 let songNameRegex = /(.*)-.*\.mp3$/;
 // TODO:allow  queue to be by channel
@@ -28,6 +29,22 @@ function addToQueue(fileName) {
   _playNext();
 }
 
+function _getNextSong() {
+  let song;
+  if (shuffle) {
+    // Choose a random song and remove it from the array
+    let randomSongIndex = Math.floor(Math.random() * playQueue.length);
+    song = playQueue[randomSongIndex];
+    playQueue.splice(randomSongIndex, 1);
+    playHistory.push(song);
+  } else {
+    // Get the next song
+    song = playQueue.shift();
+    playHistory.push(song);
+  }
+  return song;
+}
+
 function _playNext() {
   console.log(`playNext enter? ${!isPlaying && playQueue.length > 0}`);
   if (!isPlaying && playQueue.length > 0) {
@@ -40,16 +57,18 @@ function _playNext() {
         musicStream = new Volume();
         musicStream.setVolume(volume);
         voiceStream.send(musicStream);
-        let song = playQueue.shift();
-        playHistory.push(song);
+        let song = _getNextSong();
         let pcmStream = ChildProc.spawn('ffmpeg', [
           '-i', song.fileName,
           '-f', 's16le',
           '-ar', '48000',
           'pipe:1'
         ], {stdio: ['pipe', 'pipe', 'ignore']});
-        // let speaker = new Speaker();
-        // volumeStream.pipe(speaker);
+
+        bot.sendMessage({
+          to: textChannelId,
+          message: `Now Playing: ${song.songName}`
+        });
         // TODO Let the stream close out and then get audio context agian?
         pcmStream.stdout.pipe(musicStream);
         pcmStream.on('close', _handleSongEnd);
@@ -66,10 +85,17 @@ function _handleSongEnd() {
   _playNext();
 }
 
-function setVolume(percentage){
-  console.log(`setting volume to ${percentage / 100}`);
-  musicStream.setVolume(percentage / 100);
+function setVolume(percentage) {
   volume = percentage / 100;
+  console.log(`setting volume to ${volume}`);
+  if (musicStream) {
+    musicStream.setVolume(volume);
+  }
+  // TODO: make sure this whole music control is initialized on startup......
+  bot.sendMessage({
+    to: textChannelId,
+    message: `Set volume to ${volume}.`
+  });
 }
 
 // TODO ensure stream is set before playback
@@ -81,4 +107,12 @@ function setStreamChannel(newBot, newVoiceChannelID, newTextChannelId) {
   textChannelId = newTextChannelId;
 }
 
-module.exports = {addToQueue, setStreamChannel, setVolume};
+function toggleShuffle() {
+  shuffle = !shuffle;
+  bot.sendMessage({
+    to: textChannelId,
+    message: `Turned shuffle ${shuffle ? 'on' : 'off'}.`
+  });
+}
+
+module.exports = {addToQueue, setStreamChannel, setVolume, toggleShuffle};
