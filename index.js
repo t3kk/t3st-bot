@@ -7,6 +7,7 @@ let {addToQueue, setStreamChannel, setVolume, toggleShuffle} = require('./src/mu
 let voiceChannel = "140673738298359809";
 let textChannel = "140673738298359808";
 
+
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
 let volumeRegex = /^@(?:vol|volume) (100|[0-9]{1,2})/;
