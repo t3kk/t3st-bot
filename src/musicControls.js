@@ -96,7 +96,7 @@ function setVolume(percentage) {
   // TODO: make sure this whole music control is initialized on startup......
   bot.sendMessage({
     to: textChannelId,
-    message: `Set volume to ${volume}.`
+    message: `Volume set to ${volume * 100}%.`
   });
 }
 
