@@ -46,10 +46,12 @@ function _getNextSong() {
 }
 
 function _playNext() {
+  console.log('playback');
+  console.log(`voiceChannelId ${voiceChannelId}`);
   console.log(`playNext enter? ${!isPlaying && playQueue.length > 0}`);
   if (!isPlaying && playQueue.length > 0) {
-    bot.getAudioContext(
-      {channel: voiceChannelId, stereo: true}, (error, stream) => {
+    bot.getAudioContext(voiceChannelId,
+      function(error, stream) {
         voiceStream = stream;
         console.log(`err: ${error}`);
         // TODO:hook queue into callbacks https://github.com/izy521/discord.io/blob/daeba2c4aa292657cc7b490e73c563991bd3980b/lib/index.js#L1957
@@ -101,7 +103,7 @@ function setVolume(percentage) {
 // TODO ensure stream is set before playback
 function setStreamChannel(newBot, newVoiceChannelID, newTextChannelId) {
   console.log('this bot');
-  console.log(bot);
+  console.log(newBot);
   bot = newBot;
   voiceChannelId = newVoiceChannelID;
   textChannelId = newTextChannelId;

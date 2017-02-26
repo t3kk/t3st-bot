@@ -7,7 +7,6 @@ let {addToQueue, setStreamChannel, setVolume, toggleShuffle} = require('./src/mu
 let voiceChannel = "140673738298359809";
 let textChannel = "140673738298359808";
 
-
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
 let volumeRegex = /^@(?:vol|volume) (100|[0-9]{1,2})/;
@@ -19,7 +18,15 @@ let bot = new Discord.Client({
 
 bot.on('ready', function() {
   console.log(bot.username + " - (" + bot.id + ")");
-  bot.joinVoiceChannel(voiceChannel);
+  console.log("ryan was here");
+  bot.joinVoiceChannel(voiceChannel, function(error) {
+    console.error(error);
+    bot.getAudioContext(voiceChannel, function(err, stream) {
+      console.log('Ryan')
+      if (err) return console.error(err);
+      console.log('derp')
+    });
+  });
 });
 
 bot.on('message', function(user, userID, channelID, message, event) {
@@ -109,8 +116,6 @@ let streamSetup;
 function setupStream() {
   if (!streamSetup) {
     streamSetup = true;
-    console.log('bot:');
-    console.log(bot);
     setStreamChannel(bot, voiceChannel, textChannel);
   }
 }
