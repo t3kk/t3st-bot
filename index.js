@@ -2,10 +2,11 @@ let Discord = require('discord.io');
 let config = require('./config.js');
 let youtubeDL = require('youtube-dl');
 
-let {addToQueue, setStreamChannel, setVolume, toggleShuffle} = require('./src/musicControls');
+let {addToQueue, setStreamChannel, setVolume, toggleShuffle}
+  = require('./src/musicControls');
 
-let voiceChannel = "140673738298359809";
-let textChannel = "140673738298359808";
+let voiceChannel = '140673738298359809';
+let textChannel = '140673738298359808';
 
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
@@ -13,12 +14,12 @@ let volumeRegex = /^@(?:vol|volume) (100|[0-9]{1,2})/;
 
 let bot = new Discord.Client({
   token: config.token,
-  autorun: true
+  autorun: true,
 });
 
 bot.on('ready', function() {
-  console.log(bot.username + " - (" + bot.id + ")");
-  console.log("ryan was here");
+  console.log(bot.username + ' - (' + bot.id + ')');
+  console.log('ryan was here');
   bot.joinVoiceChannel(voiceChannel, function(error) {
     console.error(error);
     bot.getAudioContext(voiceChannel, function(err, stream) {
@@ -28,7 +29,8 @@ bot.on('ready', function() {
 });
 
 bot.on('message', function(user, userID, channelID, message, event) {
-  //  If the message starts with roll, take the first instance of the dice regex and give the result
+  // If the message starts with roll,
+  // take the first instance of the dice regex and give the result
   //  TODO: error checking
   if (message.startsWith('@roll ')) {
     //  TODO: use matching group so we can switch on the command part
@@ -50,7 +52,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
       `for a total of ${sum}${reason}.  Rolls were ${rolls}.`;
     bot.sendMessage({
       to: channelID,
-      message: response
+      message: response,
     });
   }
   if (message.startsWith('@play ')) {

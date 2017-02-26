@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "eslint": "^3.3.1",
-    "eslint-config-google": "^0.6.0",
+    "eslint-config-google": "^0.7.1",
     "fluent-ffmpeg": "^2.1.0",
     "lame": "^1.2.4",
     "youtube-dl": "^1.11.1"

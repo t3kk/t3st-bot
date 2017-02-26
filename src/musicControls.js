@@ -23,7 +23,7 @@ function addToQueue(fileName) {
   console.log(`addToQueue`);
   let song = {
     fileName: fileName,
-    songName: songNameRegex.exec(fileName)[1]
+    songName: songNameRegex.exec(fileName)[1],
   };
   playQueue.push(song);
   _playNext();
@@ -64,12 +64,12 @@ function _playNext() {
           '-i', song.fileName,
           '-f', 's16le',
           '-ar', '48000',
-          'pipe:1'
+          'pipe:1',
         ], {stdio: ['pipe', 'pipe', 'ignore']});
 
         bot.sendMessage({
           to: textChannelId,
-          message: `Now Playing: ${song.songName}`
+          message: `Now Playing: ${song.songName}`,
         });
         // TODO Let the stream close out and then get audio context agian?
         pcmStream.stdout.pipe(musicStream);
@@ -96,7 +96,7 @@ function setVolume(percentage) {
   // TODO: make sure this whole music control is initialized on startup......
   bot.sendMessage({
     to: textChannelId,
-    message: `Volume set to ${volume * 100}%.`
+    message: `Volume set to ${volume * 100}%.`,
   });
 }
 
@@ -113,7 +113,7 @@ function toggleShuffle() {
   shuffle = !shuffle;
   bot.sendMessage({
     to: textChannelId,
-    message: `Turned shuffle ${shuffle ? 'on' : 'off'}.`
+    message: `Turned shuffle ${shuffle ? 'on' : 'off'}.`,
   });
 }
 

@@ -1,6 +1,6 @@
-var ytdl = require('youtube-dl');
+let ytdl = require('youtube-dl');
 
-var url = 'https://www.youtube.com/watch?v=H7HmzwI67ec';
+let url = 'https://www.youtube.com/watch?v=H7HmzwI67ec';
 
 ytdl.exec(url, ['-x', '--audio-format', 'mp3'], {}, function exec(err, output) {
   'use strict';
