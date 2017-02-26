@@ -18,7 +18,7 @@ let textChannelId;
 let bot;
 let voiceChannelId;
 
-//TODO: check for 48000Hz
+// TODO: check for 48000Hz
 function addToQueue(fileName) {
   console.log(`addToQueue`);
   let song = {

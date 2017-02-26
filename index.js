@@ -22,9 +22,7 @@ bot.on('ready', function() {
   bot.joinVoiceChannel(voiceChannel, function(error) {
     console.error(error);
     bot.getAudioContext(voiceChannel, function(err, stream) {
-      console.log('Ryan')
       if (err) return console.error(err);
-      console.log('derp')
     });
   });
 });
