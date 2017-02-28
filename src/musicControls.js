@@ -68,6 +68,10 @@ function _playNext() {
           'pipe:1',
         ], {stdio: ['pipe', 'pipe', 'ignore']});
 
+        bot.setPresence({
+          game: {name: song.songName},
+        });
+
         bot.sendMessage({
           to: textChannelId,
           message: `Now Playing: \`${song.songName}\` as requested by ${song.requester}`, //eslint-disable-line max-len

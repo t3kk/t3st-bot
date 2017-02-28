@@ -82,7 +82,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
     setVolume(newVolume);
   }
 
-  //TODO: check that the stream is initialized and if not do it.
+  // TODO: check that the stream is initialized and if not do it.
   if (message.startsWith('@shuffle')) {
     toggleShuffle();
   }
@@ -99,7 +99,7 @@ process.on('SIGINT', function() {
 /**
  * Takes a file and a message event.  Removes the message from the channel that
  * the message was on and queues the file up for playback.
- * @param {string} file
+ * @param {string} output
  * @param {object} messageEvent
  */
 function queueFile(output, messageEvent) {
@@ -107,10 +107,7 @@ function queueFile(output, messageEvent) {
   // Kinda trustingly get file name... Make this seletcion safer if possible
   let fileNameRegex = /^\[ffmpeg\] Destination: (.*)/;
   // let outputFilesRegex = /\[ffmpeg\] Destination: (.*?\..*?)'/;  //Smash the output together and then globally match this regex?
-  output.forEach(function(row, index, array) {  //Run a filter maybe?
-    console.log(`=======================start=row=${index}===========================`);
-    console.log(row);
-    console.log(`!!!!!!!!!!!!!!!!!!!!!!!end!!!row!${index}!!!!!!!!!!!!!!!!!!!!!!!!!!!`);
+  output.filter( function(row) {  // Run a filter maybe?
     let fileNameExtraction = fileNameRegex.exec(row);
     console.log(fileNameExtraction);
     if (fileNameExtraction) {
@@ -120,18 +117,6 @@ function queueFile(output, messageEvent) {
       addToQueue(fileName, getMentionStringForSender(messageEvent));
     }
   });
-  // console.log(files);
-  // let fileNameExtraction = fileNameRegex.exec(output[output.length - 2]);
-  // console.log(fileNameExtraction);
-  // if (fileNameExtraction) {
-  //   let fileName = fileNameExtraction[1];
-  //   console.log(`Queue File ${fileName}`);
-  //   setupStream();
-  //   addToQueue(fileName, getMentionStringForSender(messageEvent));
-  // } else { // Unable to extract file name
-  //   console.log('File Not Found!  YTDL Output:');
-  //   console.log(output);
-  // }
   removeMessageByEvent(messageEvent);
 }
 
