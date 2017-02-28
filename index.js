@@ -5,8 +5,8 @@ let youtubeDL = require('youtube-dl');
 let {addToQueue, setStreamChannel, setVolume, toggleShuffle}
   = require('./src/musicControls');
 
-let voiceChannel = '140673738298359809';
-let textChannel = '140673738298359808';
+let voiceChannel = '219530331357839370';
+let textChannel = '216054342317375488';
 
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
@@ -59,7 +59,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
     // TODO: vlaidate URL with https://gist.github.com/dperini/729294 ?
     // get the url
     let url = message.substr(6);
-    console.log(`url: ${url}`);
+    // if only we coudl get lines as they come out.
     youtubeDL.exec(url,
       ['-x', '--audio-format', 'mp3', '--audio-quality', '128K'],
       {},
@@ -70,7 +70,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
         } else {
           // Play file
           console.log(output.join('\n'));
-          queueFile(output);
+          queueFile(output, event);
         }
       // output.pipe(fs.createWriteStream('test.mp3'));
       }
@@ -82,6 +82,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
     setVolume(newVolume);
   }
 
+  //TODO: check that the stream is initialized and if not do it.
   if (message.startsWith('@shuffle')) {
     toggleShuffle();
   }
@@ -94,25 +95,67 @@ process.on('SIGINT', function() {
   process.exit();
 });
 
-// TODO Rename to somethign involving getting the file name and move out
-function queueFile(output) {
+
+/**
+ * Takes a file and a message event.  Removes the message from the channel that
+ * the message was on and queues the file up for playback.
+ * @param {string} file
+ * @param {object} messageEvent
+ */
+function queueFile(output, messageEvent) {
+  // TODO Rename to somethign involving getting the file name and move out
   // Kinda trustingly get file name... Make this seletcion safer if possible
   let fileNameRegex = /^\[ffmpeg\] Destination: (.*)/;
-  let fileNameExtraction = fileNameRegex.exec(output[output.length - 2]);
-  console.log(fileNameExtraction);
-  if (fileNameExtraction) {
-    let fileName = fileNameExtraction[1];
-    console.log(`Queue File ${fileName}`);
-    setupStream();
-    addToQueue(fileName);
-  } else { // Unable to extract file name
-    console.log('File Not Found!  YTDL Output:');
-    console.log(output);
-  }
+  // let outputFilesRegex = /\[ffmpeg\] Destination: (.*?\..*?)'/;  //Smash the output together and then globally match this regex?
+  output.forEach(function(row, index, array) {  //Run a filter maybe?
+    console.log(`=======================start=row=${index}===========================`);
+    console.log(row);
+    console.log(`!!!!!!!!!!!!!!!!!!!!!!!end!!!row!${index}!!!!!!!!!!!!!!!!!!!!!!!!!!!`);
+    let fileNameExtraction = fileNameRegex.exec(row);
+    console.log(fileNameExtraction);
+    if (fileNameExtraction) {
+      let fileName = fileNameExtraction[1];
+      console.log(`Queue File ${fileName}`);
+      setupStream();
+      addToQueue(fileName, getMentionStringForSender(messageEvent));
+    }
+  });
+  // console.log(files);
+  // let fileNameExtraction = fileNameRegex.exec(output[output.length - 2]);
+  // console.log(fileNameExtraction);
+  // if (fileNameExtraction) {
+  //   let fileName = fileNameExtraction[1];
+  //   console.log(`Queue File ${fileName}`);
+  //   setupStream();
+  //   addToQueue(fileName, getMentionStringForSender(messageEvent));
+  // } else { // Unable to extract file name
+  //   console.log('File Not Found!  YTDL Output:');
+  //   console.log(output);
+  // }
+  removeMessageByEvent(messageEvent);
+}
+
+/**
+ * Removes a message from the channel it was posted by using data contained in the message event itself.
+ * @param {object} messageEvent
+ */
+function removeMessageByEvent(messageEvent) {
+  let messageId = messageEvent.d.id;
+  let channelId = messageEvent.d.channel_id;
+  bot.deleteMessage(channelId, messageId);
+}
+/**
+ * @param {object} messageEvent
+ * @return {string} that can be used to mention the sender of the message related to the messageEvent
+ */
+function getMentionStringForSender(messageEvent) {
+  return `<@${messageEvent.d.author.id}>`;
 }
 
 let streamSetup;
-
+/**
+ * Initializes variables in src/musicControls.js...  Probably refactor this.
+ */
 function setupStream() {
   if (!streamSetup) {
     streamSetup = true;
