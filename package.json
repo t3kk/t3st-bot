@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "bot": "node index.js",
+    "lint": "eslint index.js src/*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ryan Flaherty",

@@ -19,11 +19,12 @@ let bot;
 let voiceChannelId;
 
 // TODO: check for 48000Hz
-function addToQueue(fileName) {
+function addToQueue(fileName, requester) {
   console.log(`addToQueue`);
   let song = {
     fileName: fileName,
     songName: songNameRegex.exec(fileName)[1],
+    requester: requester,
   };
   playQueue.push(song);
   _playNext();
@@ -69,7 +70,7 @@ function _playNext() {
 
         bot.sendMessage({
           to: textChannelId,
-          message: `Now Playing: ${song.songName}`,
+          message: `Now Playing: \`${song.songName}\` as requested by ${song.requester}`, //eslint-disable-line max-len
         });
         // TODO Let the stream close out and then get audio context agian?
         pcmStream.stdout.pipe(musicStream);
@@ -102,8 +103,6 @@ function setVolume(percentage) {
 
 // TODO ensure stream is set before playback
 function setStreamChannel(newBot, newVoiceChannelID, newTextChannelId) {
-  console.log('this bot');
-  console.log(newBot);
   bot = newBot;
   voiceChannelId = newVoiceChannelID;
   textChannelId = newTextChannelId;
