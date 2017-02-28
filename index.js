@@ -19,9 +19,8 @@ let bot = new Discord.Client({
 
 bot.on('ready', function() {
   console.log(bot.username + ' - (' + bot.id + ')');
-  console.log('ryan was here');
   bot.joinVoiceChannel(voiceChannel, function(error) {
-    console.error(error);
+    if (error) return console.error(error);
     bot.getAudioContext(voiceChannel, function(err, stream) {
       if (err) return console.error(err);
     });
@@ -59,6 +58,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
     // TODO: vlaidate URL with https://gist.github.com/dperini/729294 ?
     // get the url
     let url = message.substr(6);
+    bot.simulateTyping(channelID);
     // if only we coudl get lines as they come out.
     youtubeDL.exec(url,
       ['-x', '--audio-format', 'mp3', '--audio-quality', '128K'],
