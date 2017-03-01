@@ -89,6 +89,10 @@ function _handleSongEnd() {
   // TODO: Return a function so we don't grow the stack here
   console.log(`handle song end`);
   isPlaying = false;
+  //Remove now plpaying status
+  bot.setPresence({
+    game: null,
+  });
   _playNext();
 }
 

@@ -5,8 +5,8 @@ let youtubeDL = require('youtube-dl');
 let {addToQueue, setStreamChannel, setVolume, toggleShuffle}
   = require('./src/musicControls');
 
-let voiceChannel = '219530331357839370';
-let textChannel = '216054342317375488';
+let voiceChannel = '140673738298359809';
+let textChannel = '286204341809840129';
 
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
@@ -56,21 +56,39 @@ bot.on('message', function(user, userID, channelID, message, event) {
   }
   if (message.startsWith('@play ')) {
     // TODO: vlaidate URL with https://gist.github.com/dperini/729294 ?
+    // TODO: use --flat-playlist to get a list of videos and parse one at a time to get a playlist loaded quickly
     // get the url
     let url = message.substr(6);
     bot.simulateTyping(channelID);
     // if only we coudl get lines as they come out.
+    // youtubeDL.exec(url,
+    //   ['-x', '--audio-format', 'mp3', '--audio-quality', '128K'],
+    //   {},
+    //   function exec(err, output) {
+    //     'use strict';
+    //     if (err) {
+    //       throw err;
+    //     } else {
+    //       // Play file
+    //       console.log(output.join('\n'));
+    //       queueFile(output, event);
+    //     }
+    //   // output.pipe(fs.createWriteStream('test.mp3'));
+    //   }
+    // );
     youtubeDL.exec(url,
-      ['-x', '--audio-format', 'mp3', '--audio-quality', '128K'],
+      ['-sqJ'],
       {},
       function exec(err, output) {
         'use strict';
         if (err) {
           throw err;
         } else {
-          // Play file
-          console.log(output.join('\n'));
-          queueFile(output, event);
+          // Parse output
+          let playlist = JSON.parse(output);
+          playlist.entries.forEach(function(entry) {
+            console.log(`\n\n${entry.webpage_url}\n${entry.title}`);
+          });
         }
       // output.pipe(fs.createWriteStream('test.mp3'));
       }
