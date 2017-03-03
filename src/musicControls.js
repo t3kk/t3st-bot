@@ -23,6 +23,7 @@ function addToQueue(fileName, requester) {
   console.log(`addToQueue`);
   let song = {
     fileName: fileName,
+    // TODO: Use song name from ytdl instead
     songName: songNameRegex.exec(fileName)[1],
     requester: requester,
   };
