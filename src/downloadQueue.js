@@ -95,6 +95,7 @@ function _downloadComplete(err, output, callback) {
   try{
     callback(!err, fileName);
   } catch(error) {
+    console.log(error)
     console.error('Callback in _downloadComplete of downloadQueue failed');
   }
 }

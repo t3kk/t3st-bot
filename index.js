@@ -6,8 +6,8 @@ let {addToQueue, setStreamChannel, setVolume, toggleShuffle}
   = require('./src/musicControls');
 let {download} = require('./src/downloadQueue');
 
-let voiceChannel = '140673738298359809';
-let textChannel = '286204341809840129';
+let voiceChannel = '236302765612204042'; //The apple
+let textChannel = '236302765180059659'; //The Apple
 
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
@@ -73,20 +73,17 @@ bot.on('message', function(user, userID, channelID, message, event) {
         } else {
           console.log(`parser time: ${(new Date().getTime()) - time}`);
           // Parse output
-          let playlist = JSON.parse(output);
-          playlist.entries.forEach(function(entry) {
-            // Send each URL to the download queue
-            console.log(`\n\n${entry.webpage_url}\n${entry.title}`);
-            download(entry.webpage_url, function(success, fileName) {
-              if(success) {
-                setupStream();
-                addToQueue(fileName, getMentionStringForSender(event));
-              } else {
-                // TODO send message to channel or requester about failure
-                console.log(`Failed to download ${entry.title}[${entry.webpage_url}]`);
-              }
+          let parsedOutput = JSON.parse(output);
+          console.log(parsedOutput._type);
+          // Handle all the contained songs
+          if (parsedOutput._type === 'playlist') {
+            parsedOutput.entries.forEach(function(entry) {
+              downloadFile(entry, event);
             });
-          });
+          } else {
+            // Handle single song
+            downloadFile(parsedOutput, event);
+          }
         }
       }
     );
@@ -109,6 +106,20 @@ process.on('SIGINT', function() {
   bot.disconnect();
   process.exit();
 });
+
+function downloadFile(entry, event) {
+  // Send each URL to the download queue
+  console.log(`\n\n${entry.webpage_url}\n${entry.title}`);
+  download(entry.webpage_url, function(success, fileName) {
+    if (success) {
+      setupStream();
+      addToQueue(fileName, getMentionStringForSender(event));
+    } else {
+      // TODO send message to channel or requester about failure
+      console.log(`Failed to download ${entry.title}[${entry.webpage_url}]`);
+    }
+  });
+}
 
 
 /**
