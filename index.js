@@ -6,8 +6,11 @@ let {addToQueue, setStreamChannel, setVolume, toggleShuffle}
   = require('./src/musicControls');
 let {download} = require('./src/downloadQueue');
 
-let voiceChannel = '236302765612204042'; //The apple
-let textChannel = '236302765180059659'; //The Apple
+let voiceChannel = '314260605177692163'; //  Novron
+let textChannel = '286204341809840129'; // Novron
+// let voiceChannel = '219530331357839370'; // audio test
+// let voiceChannel = '236302765612204042'; // The Apple
+// let textChannel = '236302765180059659'; // The Apple
 
 // Define some stuff!!!
 // TODO move this out to some singletons for easier access?
@@ -63,26 +66,20 @@ bot.on('message', function(user, userID, channelID, message, event) {
     bot.simulateTyping(channelID);
     let time = new Date().getTime();
 
-    youtubeDL.exec(url,
-      ['-sqJ'],
-      {},
-      function exec(err, output) {
-        'use strict';
+    youtubeDL.getInfo(url, [],
+      {maxBuffer: Infinity},
+      function exec(err, info) {
         if (err) {
           throw err;
         } else {
           console.log(`parser time: ${(new Date().getTime()) - time}`);
-          // Parse output
-          let parsedOutput = JSON.parse(output);
-          console.log(parsedOutput._type);
-          // Handle all the contained songs
-          if (parsedOutput._type === 'playlist') {
-            parsedOutput.entries.forEach(function(entry) {
+          // Check if its a playlist
+          if (Array.isArray(info)) {
+            info.forEach( (entry) => {
               downloadFile(entry, event);
             });
-          } else {
-            // Handle single song
-            downloadFile(parsedOutput, event);
+          } else {  // it is a single song
+            downloadFile(info, event);
           }
         }
       }

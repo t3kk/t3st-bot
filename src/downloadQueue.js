@@ -59,12 +59,15 @@ function _startDownload() {
     console.log(`console.log startin DL`);
     _downloadInProgress = true;
     let download = _getNext();
+    console.log('download', download);
 
     youtubeDL.exec(
       download.url,
       ['-x', '--print-json', '--audio-format', 'mp3', '--audio-quality', '128K'],
-      {},
+      {maxBuffer: Infinity},
       function(error, output) {
+        console.log('=================');
+        console.log(output);
         _downloadComplete(error, output, download.callback);
       }
     );
@@ -82,7 +85,7 @@ function _downloadComplete(err, output, callback) {
   console.log('in dl complete');
   let fileName;
   if (err) {
-    console.log(`Download failed: {$err}`); // TODO:
+    console.log(`Download failed: ${err}`); // TODO:
   } else {
     // let outputFilesRegex = /\[ffmpeg\] Destination: (.*?\..*?)'/;  //Smash the output together and then globally match this regex?
     let downloadInfo = JSON.parse(output);
