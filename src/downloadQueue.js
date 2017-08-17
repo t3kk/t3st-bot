@@ -95,10 +95,10 @@ function _downloadComplete(err, output, callback) {
   }
   _downloadInProgress = false;
   _startDownload();
-  try{
+  try {
     callback(!err, fileName);
-  } catch(error) {
-    console.log(error)
+  } catch (error) {
+    console.log(error);
     console.error('Callback in _downloadComplete of downloadQueue failed');
   }
 }

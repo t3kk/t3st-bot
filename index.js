@@ -78,7 +78,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
             info.forEach( (entry) => {
               downloadFile(entry, event);
             });
-          } else {  // it is a single song
+          } else { // it is a single song
             downloadFile(info, event);
           }
         }
@@ -128,7 +128,6 @@ function downloadFile(entry, event) {
 function queueFile(output, messageEvent) {
   // TODO Rename to somethign involving getting the file name and move out
   // Kinda trustingly get file name... Make this seletcion safer if possible
-
 
 
 }

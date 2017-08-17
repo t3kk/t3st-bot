@@ -75,7 +75,7 @@ function _playNext() {
 
         bot.sendMessage({
           to: textChannelId,
-          message: `Now Playing: \`${song.songName}\` as requested by ${song.requester}`, //eslint-disable-line max-len
+          message: `Now Playing: \`${song.songName}\` as requested by ${song.requester}`, // eslint-disable-line max-len
         });
         // TODO Let the stream close out and then get audio context agian?
         pcmStream.stdout.pipe(musicStream);
@@ -90,7 +90,7 @@ function _handleSongEnd() {
   // TODO: Return a function so we don't grow the stack here
   console.log(`handle song end`);
   isPlaying = false;
-  //Remove now plpaying status
+  // Remove now plpaying status
   bot.setPresence({
     game: null,
   });
