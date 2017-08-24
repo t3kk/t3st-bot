@@ -31,6 +31,12 @@ bot.on('ready', function() {
   });
 });
 
+// Handle Disconnects
+bot.on('disconnect', function() {
+  console.log('encountered disconnect');
+  bot.connect();
+});
+
 bot.on('message', function(user, userID, channelID, message, event) {
   // If the message starts with roll,
   // take the first instance of the dice regex and give the result
