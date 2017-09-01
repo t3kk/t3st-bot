@@ -23,10 +23,18 @@ let bot = new Discord.Client({
 
 bot.on('ready', function() {
   console.log(bot.username + ' - (' + bot.id + ')');
+  // TODO: Check that the voice channel is truely active
+  console.log('channels before connect:');
+  Object.keys(bot.channels).forEach(key => {
+    console.log(bot.channels[key]);
+  });
+  console.log('done listing channels');
   bot.joinVoiceChannel(voiceChannel, function(error) {
     if (error) return console.error(error);
     bot.getAudioContext(voiceChannel, function(err, stream) {
       if (err) return console.error(err);
+      console.log('voice chan');
+      console.log(bot.channels[voiceChannel]);
     });
   });
 });
