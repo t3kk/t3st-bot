@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for downloadQueue.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> downloadQueue.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">37.5% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>15/40</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">25% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>2/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>4/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">37.5% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>15/40</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// TODO switch to promises??
+let youtubeDL = require('youtube-dl');
+let _downloadQueue = [];
+let _downloadInProgress = false;
+&nbsp;
+exports.private = {};
+exports.private._addToQueue = _addToQueue;
+exports.private._downloadQueue = _downloadQueue;
+exports.private._isEmpty = _isEmpty;
+exports.private._getNext = _getNext;
+exports.private._queueSize = _queueSize;
+&nbsp;
+/**
+ * Adda  url to the download queue
+ * @param {string} url
+ * @param {function} callback to execute when file is available
+ */
+function _addToQueue(url, callback) {
+  _downloadQueue.push({url: url, callback: callback});
+}
+&nbsp;
+/**
+ * Get next url to download
+ * @return {string} url
+ */
+function _getNext() {
+  if (_downloadQueue.length &gt; 0) {
+    return _downloadQueue.shift();
+  }
+}
+&nbsp;
+/**
+ * @return {number} number of items remaining in the download queue.
+ */
+function _queueSize() {
+  return _downloadQueue.length;
+}
+&nbsp;
+/**
+ * @return {boolean} if the queue has no more items.
+ */
+function _isEmpty() {
+  return _downloadQueue.length === 0;
+}
+/**
+ * Take a url and download it as a mp3.
+ * TODO: get the ID first and check for an existing mp3
+ * @param {string} url
+ * @param {function} callback to execute when file is available
+ */
+exports.download = function <span class="fstat-no" title="function not covered" >download(</span>url, callback) {
+<span class="cstat-no" title="statement not covered" >  console.log(`adding to queue ${url}`);</span>
+  // fetch id and check existing files if not there download it
+  // may need to also check the queue for duplicates... somehow
+<span class="cstat-no" title="statement not covered" >  _addToQueue(url, callback);</span>
+  // start downloading if one isn't in progress.
+<span class="cstat-no" title="statement not covered" >  _startDownload();</span>
+};
+&nbsp;
+/**
+ * Gets the next download from the queue and fetch it
+ */
+function <span class="fstat-no" title="function not covered" >_startDownload(</span>) {
+<span class="cstat-no" title="statement not covered" >  console.log('in start DL');</span>
+<span class="cstat-no" title="statement not covered" >  if (!_downloadInProgress &amp;&amp; !_isEmpty()) {</span>
+<span class="cstat-no" title="statement not covered" >    console.log(`console.log startin DL`);</span>
+<span class="cstat-no" title="statement not covered" >    _downloadInProgress = true;</span>
+    let download = <span class="cstat-no" title="statement not covered" >_getNext();</span>
+<span class="cstat-no" title="statement not covered" >    console.log('download', download);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    youtubeDL.exec(</span>
+      download.url,
+      ['-x', '--print-json', '--audio-format', 'mp3', '--audio-quality', '128K'],
+      {maxBuffer: Infinity},
+<span class="fstat-no" title="function not covered" >      fu</span>nction(error, output) {
+<span class="cstat-no" title="statement not covered" >        console.log('=================');</span>
+<span class="cstat-no" title="statement not covered" >        console.log(output);</span>
+<span class="cstat-no" title="statement not covered" >        _downloadComplete(error, output, download.callback);</span>
+      }
+    );
+  }
+}
+&nbsp;
+&nbsp;
+/**
+ * Used to handle the result of exxecution of a youtube-dl
+ * @param {error} err any errors youtube-dl encountered
+ * @param {Array} output of youtube-dl
+ * @param {function} callback to handle getting the file - paramters not yet deinfed
+ */
+function <span class="fstat-no" title="function not covered" >_downloadComplete(</span>err, output, callback) {
+<span class="cstat-no" title="statement not covered" >  console.log('in dl complete');</span>
+  let fileName;
+<span class="cstat-no" title="statement not covered" >  if (err) {</span>
+<span class="cstat-no" title="statement not covered" >    console.log(`Download failed: ${err}`); </span>// TODO:
+  } else {
+    // let outputFilesRegex = /\[ffmpeg\] Destination: (.*?\..*?)'/;  //Smash the output together and then globally match this regex?
+    let downloadInfo = <span class="cstat-no" title="statement not covered" >JSON.parse(output);</span>
+    // Get the download file name and replace the extension with mp3 since thats how its output
+<span class="cstat-no" title="statement not covered" >    fileName = downloadInfo._filename;</span>
+<span class="cstat-no" title="statement not covered" >    fileName = fileName.substring(0, fileName.lastIndexOf('.')) + '.mp3';</span>
+  }
+<span class="cstat-no" title="statement not covered" >  _downloadInProgress = false;</span>
+<span class="cstat-no" title="statement not covered" >  _startDownload();</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    callback(!err, fileName);</span>
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.log(error);</span>
+<span class="cstat-no" title="statement not covered" >    console.error('Callback in _downloadComplete of downloadQueue failed');</span>
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Oct 26 2017 16:24:37 GMT-0400 (EDT)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>

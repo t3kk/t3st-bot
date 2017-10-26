@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for musicControls.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> musicControls.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/52</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/52</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">let ChildProc = <span class="cstat-no" title="statement not covered" >require('child_process');</span>
+let Volume = <span class="cstat-no" title="statement not covered" >require('pcm-volume');</span>
+// TODO: prefix private variables
+&nbsp;
+let songNameRegex = <span class="cstat-no" title="statement not covered" >/(.*)-.*\.mp3$/;</span>
+// TODO:allow  queue to be by channel
+let playQueue = <span class="cstat-no" title="statement not covered" >[];</span>
+let playHistory = <span class="cstat-no" title="statement not covered" >[];</span>
+// Load from config
+let shuffle = <span class="cstat-no" title="statement not covered" >false;</span>
+let isPlaying = <span class="cstat-no" title="statement not covered" >false;</span>
+let volume = <span class="cstat-no" title="statement not covered" >0.15;</span>
+let voiceStream;
+&nbsp;
+let musicStream;
+&nbsp;
+let textChannelId;
+let bot;
+let voiceChannelId;
+&nbsp;
+// TODO: check for 48000Hz
+function <span class="fstat-no" title="function not covered" >addToQueue(</span>fileName, requester) {
+<span class="cstat-no" title="statement not covered" >  console.log(`addToQueue`);</span>
+  let song = <span class="cstat-no" title="statement not covered" >{</span>
+    fileName: fileName,
+    // TODO: Use song name from ytdl instead
+    songName: songNameRegex.exec(fileName)[1],
+    requester: requester,
+  };
+<span class="cstat-no" title="statement not covered" >  playQueue.push(song);</span>
+<span class="cstat-no" title="statement not covered" >  _playNext();</span>
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >_getNextSong(</span>) {
+  let song;
+<span class="cstat-no" title="statement not covered" >  if (shuffle) {</span>
+    // Choose a random song and remove it from the array
+    let randomSongIndex = <span class="cstat-no" title="statement not covered" >Math.floor(Math.random() * playQueue.length);</span>
+<span class="cstat-no" title="statement not covered" >    song = playQueue[randomSongIndex];</span>
+<span class="cstat-no" title="statement not covered" >    playQueue.splice(randomSongIndex, 1);</span>
+<span class="cstat-no" title="statement not covered" >    playHistory.push(song);</span>
+  } else {
+    // Get the next song
+<span class="cstat-no" title="statement not covered" >    song = playQueue.shift();</span>
+<span class="cstat-no" title="statement not covered" >    playHistory.push(song);</span>
+  }
+<span class="cstat-no" title="statement not covered" >  return song;</span>
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >_playNext(</span>) {
+<span class="cstat-no" title="statement not covered" >  console.log('playback');</span>
+<span class="cstat-no" title="statement not covered" >  console.log(`voiceChannelId ${voiceChannelId}`);</span>
+<span class="cstat-no" title="statement not covered" >  console.log(`playNext enter? ${!isPlaying &amp;&amp; playQueue.length &gt; 0}`);</span>
+<span class="cstat-no" title="statement not covered" >  if (!isPlaying &amp;&amp; playQueue.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >    bot.getAudioContext(voiceChannelId,</span>
+<span class="fstat-no" title="function not covered" >      fu</span>nction(error, stream) {
+<span class="cstat-no" title="statement not covered" >        voiceStream = stream;</span>
+<span class="cstat-no" title="statement not covered" >        console.log(`err: ${error}`);</span>
+        // TODO:hook queue into callbacks https://github.com/izy521/discord.io/blob/daeba2c4aa292657cc7b490e73c563991bd3980b/lib/index.js#L1957
+<span class="cstat-no" title="statement not covered" >        isPlaying = true;</span>
+<span class="cstat-no" title="statement not covered" >        musicStream = new Volume();</span>
+<span class="cstat-no" title="statement not covered" >        musicStream.setVolume(volume);</span>
+<span class="cstat-no" title="statement not covered" >        voiceStream.send(musicStream);</span>
+        let song = <span class="cstat-no" title="statement not covered" >_getNextSong();</span>
+        let pcmStream = <span class="cstat-no" title="statement not covered" >ChildProc.spawn('ffmpeg', [</span>
+          '-i', song.fileName,
+          '-f', 's16le',
+          '-ar', '48000',
+          'pipe:1',
+        ], {stdio: ['pipe', 'pipe', 'ignore']});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        bot.setPresence({</span>
+          game: {name: song.songName},
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        bot.sendMessage({</span>
+          to: textChannelId,
+          message: `Now Playing: \`${song.songName}\` as requested by ${song.requester}`, // eslint-disable-line max-len
+        });
+        // TODO Let the stream close out and then get audio context agian?
+<span class="cstat-no" title="statement not covered" >        pcmStream.stdout.pipe(musicStream);</span>
+<span class="cstat-no" title="statement not covered" >        pcmStream.on('close', _handleSongEnd);</span>
+      }
+    );
+  }
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >_handleSongEnd(</span>) {
+  // Reset the streams
+  // TODO: Return a function so we don't grow the stack here
+<span class="cstat-no" title="statement not covered" >  console.log(`handle song end`);</span>
+<span class="cstat-no" title="statement not covered" >  isPlaying = false;</span>
+  // Remove now plpaying status
+<span class="cstat-no" title="statement not covered" >  bot.setPresence({</span>
+    game: null,
+  });
+<span class="cstat-no" title="statement not covered" >  _playNext();</span>
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >setVolume(</span>percentage) {
+<span class="cstat-no" title="statement not covered" >  volume = percentage / 100;</span>
+<span class="cstat-no" title="statement not covered" >  console.log(`setting volume to ${volume}`);</span>
+<span class="cstat-no" title="statement not covered" >  if (musicStream) {</span>
+<span class="cstat-no" title="statement not covered" >    musicStream.setVolume(volume);</span>
+  }
+  // TODO: make sure this whole music control is initialized on startup......
+<span class="cstat-no" title="statement not covered" >  bot.sendMessage({</span>
+    to: textChannelId,
+    message: `Volume set to ${volume * 100}%.`,
+  });
+}
+&nbsp;
+// TODO ensure stream is set before playback
+function <span class="fstat-no" title="function not covered" >setStreamChannel(</span>newBot, newVoiceChannelID, newTextChannelId) {
+<span class="cstat-no" title="statement not covered" >  bot = newBot;</span>
+<span class="cstat-no" title="statement not covered" >  voiceChannelId = newVoiceChannelID;</span>
+<span class="cstat-no" title="statement not covered" >  textChannelId = newTextChannelId;</span>
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >toggleShuffle(</span>) {
+<span class="cstat-no" title="statement not covered" >  shuffle = !shuffle;</span>
+<span class="cstat-no" title="statement not covered" >  bot.sendMessage({</span>
+    to: textChannelId,
+    message: `Turned shuffle ${shuffle ? 'on' : 'off'}.`,
+  });
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >module.exports = {addToQueue, setStreamChannel, setVolume, toggleShuffle};</span>
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Oct 26 2017 16:24:37 GMT-0400 (EDT)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>

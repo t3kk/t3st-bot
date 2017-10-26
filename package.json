@@ -5,25 +5,48 @@
   "repository": "t3kk/t3st-bot",
   "main": "index.js",
   "scripts": {
-    "bot": "node index.js",
+    "bot": "node ./src/index.js",
     "lint": "eslint index.js src/*",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test ./test/downloadQueue.js",
+    "coverage": "nyc --check-coverage mocha"
   },
   "author": "Ryan Flaherty",
   "license": "MIT",
   "dependencies": {
     "child_process": "^1.0.2",
-    "discord.io": "^2.0.0",
-    "eslint": "^4.4.1",
-    "eslint-config-google": "^0.9.1",
+    "discord.io": "^2.5.3",
+    "fluent-ffmpeg": "^2.1.0",
     "lame": "^1.2.4",
-    "node-opus": "^0.2.1",
-    "pcm-volume": "^1.0.0"
+    "node-opus": "^0.2.7",
+    "pcm-volume": "^1.0.0",
+    "youtube-dl": "^1.12.2"
   },
   "devDependencies": {
-    "eslint": "^3.3.1",
+    "chai": "^4.1.2",
+    "eslint": "^4.9.0",
     "eslint-config-google": "^0.7.1",
-    "fluent-ffmpeg": "^2.1.0",
-    "youtube-dl": "^1.11.1"
+    "mocha": "^4.0.1",
+    "nyc": "^11.2.1"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 80,
+    "statements": 80,
+    "functions": 80,
+    "branches": 80,
+    "include": [
+      "src/*.js"
+    ],
+    "reporter": [
+      "html",
+      "text-summary"
+    ],
+    "extension": [
+      ".js"
+    ],
+    "cache": true,
+    "all": true,
+    "report-dir": "./coverage"
   }
 }

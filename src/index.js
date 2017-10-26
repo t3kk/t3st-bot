@@ -1,10 +1,10 @@
 let Discord = require('discord.io');
-let config = require('./config.js');
+let config = require('../config.js');
 let youtubeDL = require('youtube-dl');
 
 let {addToQueue, setStreamChannel, setVolume, toggleShuffle}
-  = require('./src/musicControls');
-let {download} = require('./src/downloadQueue');
+  = require('./musicControls');
+let {download} = require('./downloadQueue');
 
 let voiceChannel = '314260605177692163'; //  Novron
 let textChannel = '286204341809840129'; // Novron

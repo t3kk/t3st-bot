@@ -3,6 +3,13 @@ let youtubeDL = require('youtube-dl');
 let _downloadQueue = [];
 let _downloadInProgress = false;
 
+exports.private = {};
+exports.private._addToQueue = _addToQueue;
+exports.private._downloadQueue = _downloadQueue;
+exports.private._isEmpty = _isEmpty;
+exports.private._getNext = _getNext;
+exports.private._queueSize = _queueSize;
+
 /**
  * Adda  url to the download queue
  * @param {string} url
